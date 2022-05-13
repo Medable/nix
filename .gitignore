@@ -1,0 +1,8 @@
+.direnv/
+.vscode/
+result*
+*.kube
+.bak/
+*.pem
+*.secret
+.idea

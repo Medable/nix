@@ -1,0 +1,8 @@
+*.tfstate
+*.backup
+.mypy_cache/
+.direnv/
+.bak/
+.terraform/
+result/
+app
