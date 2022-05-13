@@ -9,5 +9,5 @@ jobs:
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - run: nix-env -f . -iA statix
+      - run: nix-env -f . -iA pkgs.statix
       - run: statix check || true
