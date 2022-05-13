@@ -47,6 +47,11 @@ let
       nixpkgs-fmt
       nodePackages.prettier
     ];
+    hashers = with jacobi; [
+      nix_hash_jpetrucciani
+      nix_hash_medable
+      nix_hash_unstable
+    ];
     medable = with jacobi; [
       mdctl
     ];
