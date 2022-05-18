@@ -14,7 +14,7 @@ with builtins;
       config = {
         allowUnfree = true;
       };
-      overlays = [ (import ./overlays.nix) ];
+      overlays = (import ./overlays.nix);
     }
 , jacobi ? import
     (
