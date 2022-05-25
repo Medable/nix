@@ -30,4 +30,65 @@ rec {
     version = "2.2.23";
     sha256 = "sha256-3lc7eGtm7izLmnmiN7DpHTwnokchR0+VadWHjo651Po=";
   };
+  haproxy-2-2-24 = haproxy-pin {
+    version = "2.2.24";
+    sha256 = "sha256-DoBzENzjpSk9JFTZwbceuNFkcjBbZvB2s4S1CFix5/k=";
+  };
+
+  jellyfish = prev.jacobi.pog {
+    name = "jellyfish";
+    description = "";
+    flags = [
+      {
+        name = "name";
+        description = "the jellyfish name of this project/repo";
+      }
+      {
+        name = "token";
+        description = "the jellyfish token to use";
+        envVar = "JELLYFISH_API_TOKEN";
+      }
+      {
+        name = "deployedat";
+        description = "";
+        envVar = "CI_COMMIT_TIMESTAMP";
+      }
+      {
+        name = "commit";
+        description = "the commit hash we're reporting for";
+        envVar = "CI_COMMIT_SHA";
+      }
+      {
+        name = "url";
+        description = "the repo url";
+        envVar = "CI_REPOSITORY_URL";
+      }
+    ];
+    script = helpers: ''
+      payload=$(${prev.coreutils}/bin/mktemp)
+      cat >"$payload" <<EOF
+      {
+        "reference_id": "Jellyfish DORA",
+        "name": "$name",
+        "deployed_at": "$deployedat",
+        "repo_name": "$url",
+        "commit_shas": ["$commit"]
+      }
+      EOF
+      debug "payload at $payload"
+      ${prev.curl}/bin/curl \
+        -X POST \
+        -H 'Content-Type: application/json' \
+        -H "x-jf-api-token: $token" \
+        --data "$(cat "$payload")" \
+        https://webhooks.jellyfish.co/deployment
+    '';
+  };
+
+  custom = [
+    prospector-177
+    haproxy-2-2-24
+    haproxy-2-2-23
+    jellyfish
+  ];
 }

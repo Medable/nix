@@ -14,7 +14,7 @@ with builtins;
       config = {
         allowUnfree = true;
       };
-      overlays = (import ./overlays.nix);
+      overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./overlays.nix) ++ overlays;
     }
 , jacobi ? import
     (
@@ -25,6 +25,7 @@ with builtins;
       }
     )
     { nixpkgs = pkgs.path; }
+, overlays ? [ ]
 }:
 let
   tools = with pkgs; {
