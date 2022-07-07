@@ -1,5 +1,5 @@
-prev: next:
-with next;
+final: prev:
+with prev;
 rec {
   inherit (stdenv) isLinux isDarwin isAarch64;
 
@@ -12,7 +12,6 @@ rec {
       sha256 = "02z5hmbh0zag6smzsyd1pxgzzw84vnrdiqww3jyk3iwk6abkzjh6";
     })
     { }).prospector-176;
-
 
   # haproxy overrides
   haproxy-pin = { version, sha256 }: haproxy.overrideAttrs (attrs: rec {
@@ -35,60 +34,25 @@ rec {
     sha256 = "sha256-DoBzENzjpSk9JFTZwbceuNFkcjBbZvB2s4S1CFix5/k=";
   };
 
-  jellyfish = prev.jacobi.pog {
-    name = "jellyfish";
-    description = "";
-    flags = [
-      {
-        name = "name";
-        description = "the jellyfish name of this project/repo";
-      }
-      {
-        name = "token";
-        description = "the jellyfish token to use";
-        envVar = "JELLYFISH_API_TOKEN";
-      }
-      {
-        name = "deployedat";
-        description = "";
-        envVar = "CI_COMMIT_TIMESTAMP";
-      }
-      {
-        name = "commit";
-        description = "the commit hash we're reporting for";
-        envVar = "CI_COMMIT_SHA";
-      }
-      {
-        name = "url";
-        description = "the repo url";
-        envVar = "CI_REPOSITORY_URL";
-      }
-    ];
-    script = helpers: ''
-      payload=$(${prev.coreutils}/bin/mktemp)
-      cat >"$payload" <<EOF
-      {
-        "reference_id": "Jellyfish DORA",
-        "name": "$name",
-        "deployed_at": "$deployedat",
-        "repo_name": "$url",
-        "commit_shas": ["$commit"]
-      }
-      EOF
-      debug "payload at $payload"
-      ${prev.curl}/bin/curl \
-        -X POST \
-        -H 'Content-Type: application/json' \
-        -H "x-jf-api-token: $token" \
-        --data "$(cat "$payload")" \
-        https://webhooks.jellyfish.co/deployment
-    '';
+  awscli2 = prev.awscli2.override {
+    python3 = prev.awscli2.python // {
+      override = args: prev.awscli2.python.override (args // {
+        packageOverrides = self: super: args.packageOverrides self super // (
+          if stdenv.isDarwin
+          then {
+            twisted = super.twisted.overrideAttrs (_: { doInstallCheck = false; });
+            pyopenssl = super.pyopenssl.overrideAttrs (_: { meta.broken = false; });
+          }
+          else { }
+        );
+      });
+    };
   };
 
   custom = [
     prospector-177
     haproxy-2-2-24
     haproxy-2-2-23
-    jellyfish
+    awscli2
   ];
 }

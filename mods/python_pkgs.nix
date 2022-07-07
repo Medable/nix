@@ -1,18 +1,18 @@
 let
   pynixifyOverlay =
-    self: super: {
-      python39 = super.python39.override { inherit packageOverrides; };
-      python310 = super.python310.override { inherit packageOverrides; };
-      python311 = super.python311.override { inherit packageOverrides; };
+    final: prev: {
+      python39 = prev.python39.override { inherit packageOverrides; };
+      python310 = prev.python310.override { inherit packageOverrides; };
+      python311 = prev.python311.override { inherit packageOverrides; };
     };
 
-  packageOverrides = self: super: with self; {
-    inherit (super.stdenv) isDarwin isAarch64 isNixOS;
+  packageOverrides = final: prev: with final; {
+    inherit (prev.stdenv) isDarwin isAarch64 isNixOS;
     isM1 = isDarwin && isAarch64;
     isOldMac = isDarwin && !isAarch64;
 
-    slack-sdk = super.slack-sdk.overridePythonAttrs (_: { doCheck = false; });
-    pyopenssl = if isM1 then super.pyopenssl.overrideAttrs (_: { meta.broken = false; }) else super.pyopenssl;
+    slack-sdk = prev.slack-sdk.overridePythonAttrs (_: { doCheck = false; });
+    pyopenssl = if isM1 then prev.pyopenssl.overrideAttrs (_: { meta.broken = false; }) else prev.pyopenssl;
 
     looker-sdk = buildPythonPackage rec {
       pname = "looker-sdk";

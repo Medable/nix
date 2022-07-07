@@ -28,6 +28,7 @@ with builtins;
 , overlays ? [ ]
 }:
 let
+  name = "medable-nix";
   tools = with pkgs; {
     cli = lib.flatten [
       bashInteractive_5
@@ -59,16 +60,15 @@ let
     nix = [
       statix
     ];
+    scripts = [
+      (writeShellScriptBin "test_actions" ''
+        ${pkgs.act}/bin/act --container-architecture linux/amd64 --artifact-server-path ./.cache/ -r --rm
+      '')
+    ];
   };
 
-  packages = pkgs.lib.flatten [
-    (pkgs.lib.flatten (attrValues tools))
-  ];
-
-  env = pkgs.buildEnv {
-    name = "medable-nix";
-    paths = packages;
-    buildInputs = packages;
+  env = jacobi.enviro {
+    inherit name tools;
   };
 in
 env // { inherit pkgs jacobi; }
