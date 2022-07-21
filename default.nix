@@ -30,7 +30,7 @@ with builtins;
 let
   name = "medable-nix";
   tools = with pkgs; {
-    cli = lib.flatten [
+    cli = [
       bashInteractive_5
       curl
       delta
