@@ -33,6 +33,10 @@ rec {
     version = "2.2.24";
     sha256 = "sha256-DoBzENzjpSk9JFTZwbceuNFkcjBbZvB2s4S1CFix5/k=";
   };
+  haproxy-2-2-25 = haproxy-pin {
+    version = "2.2.25";
+    sha256 = "sha256-vrQH6wiyxpfRFaGMANagI/eg+yy5m/+cNMnf2dLFLys=";
+  };
 
   awscli2 = prev.awscli2.override {
     python3 = prev.awscli2.python // {
@@ -51,8 +55,10 @@ rec {
 
   custom = [
     prospector-177
+    haproxy-2-2-9
     haproxy-2-2-24
     haproxy-2-2-23
+    haproxy-2-2-25
     awscli2
   ];
 }
