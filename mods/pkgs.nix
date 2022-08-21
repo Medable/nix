@@ -37,6 +37,10 @@ rec {
     version = "2.2.25";
     sha256 = "sha256-vrQH6wiyxpfRFaGMANagI/eg+yy5m/+cNMnf2dLFLys=";
   };
+  haproxy-2-6-2 = haproxy-pin {
+    version = "2.6.2";
+    sha256 = "sha256-+bfcBuAusTtdlNxm4IZKcUruKvnfqxD6NT/58fUsggI=";
+  };
 
   awscli2 = prev.awscli2.override {
     python3 = prev.awscli2.python // {

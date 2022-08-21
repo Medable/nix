@@ -6,52 +6,134 @@ let
       python311 = prev.python311.override { inherit packageOverrides; };
     };
 
-  packageOverrides = final: prev: with final; {
-    inherit (prev.stdenv) isDarwin isAarch64 isNixOS;
-    isM1 = isDarwin && isAarch64;
-    isOldMac = isDarwin && !isAarch64;
+  packageOverrides = final: prev: with final;
+    let
+      inherit (prev.stdenv) isDarwin isAarch64 isNixOS;
+      isM1 = isDarwin && isAarch64;
+      isOldMac = isDarwin && !isAarch64;
+    in
+    {
+      slack-sdk = prev.slack-sdk.overridePythonAttrs (_: { doCheck = false; });
+      pyopenssl = if isM1 then prev.pyopenssl.overrideAttrs (_: { meta.broken = false; }) else prev.pyopenssl;
+      google-auth = prev.google-auth.overridePythonAttrs (_: { doCheck = false; });
 
-    slack-sdk = prev.slack-sdk.overridePythonAttrs (_: { doCheck = false; });
-    pyopenssl = if isM1 then prev.pyopenssl.overrideAttrs (_: { meta.broken = false; }) else prev.pyopenssl;
+      looker-sdk = buildPythonPackage rec {
+        pname = "looker-sdk";
+        version = "22.10.0";
 
-    looker-sdk = buildPythonPackage rec {
-      pname = "looker-sdk";
-      version = "21.20.0";
+        src = fetchPypi {
+          inherit version;
+          pname = "looker_sdk";
+          sha256 = "sha256-Ex/AAdZp+qo91qZOLtRnzlYR4y0TILiycPgZxI5pVNE=";
+        };
 
-      src = fetchPypi {
-        inherit version;
-        pname = "looker_sdk";
-        sha256 = "1fw7i0zfl90mfrynyhy485gvm0nvfsc08x3s6zs5dlibsidspzq7";
+        buildInputs = [ exceptiongroup ];
+        propagatedBuildInputs = [ requests attrs cattrs typing-extensions ];
+
+        pythonImportsCheck = [
+          "looker_sdk"
+        ];
+
+        doCheck = false;
+
+        meta = with lib; {
+          description = "Looker REST API";
+          homepage = "https://pypi.python.org/pypi/looker_sdk";
+        };
       };
 
-      propagatedBuildInputs = [ requests attrs cattrs ];
+      pydrive2 = buildPythonPackage rec {
+        pname = "pydrive2";
+        version = "1.14.0";
 
-      doCheck = false;
+        src = fetchPypi {
+          inherit version;
+          pname = "PyDrive2";
+          sha256 = "sha256-212jvmcWMPVxynEAsoHYtdcv0His1CUkem0pLis9KEA=";
+        };
 
-      meta = with lib; {
-        description = "Looker REST API";
-        homepage = "https://pypi.python.org/pypi/looker_sdk";
+        propagatedBuildInputs = [
+          google-api-python-client
+          six
+          oauth2client
+          pyyaml
+          pyopenssl
+        ];
+
+        pythonImportsCheck = [
+          "pydrive2"
+        ];
+
+        doCheck = false;
+        checkInputs = [
+          appdirs
+          fsspec
+          funcy
+          pytestCheckHook
+          timeout-decorator
+        ];
+
+        meta = with lib; {
+          description = "Google Drive API made easy. Maintained fork of PyDrive.";
+          homepage = "https://github.com/iterative/PyDrive2";
+        };
+      };
+
+      cattrs = buildPythonPackage rec {
+        pname = "cattrs";
+        version = "22.1.0";
+
+        format = "pyproject";
+
+        src = fetchTarball {
+          url = "https://github.com/python-attrs/cattrs/archive/refs/tags/v${version}.tar.gz";
+          sha256 = "1n0h25gj6zd02kqyl040xpdvg4hpy1j92716sz0rg019xjqqijqb";
+        };
+
+        propagatedBuildInputs = [ attrs ];
+        buildInputs = [ poetry exceptiongroup ];
+
+        pythonImportsCheck = [
+          "cattr"
+        ];
+
+        preConfigure = ''
+          sed -i -E '/"<= 3.10"/d' ./pyproject.toml
+        '';
+
+        doCheck = false;
+
+        meta = with lib; {
+          description = "Composable complex class support for attrs.";
+          homepage = "https://github.com/Tinche/cattrs";
+        };
+      };
+
+      google-cloud-compute = buildPythonPackage rec {
+        pname = "google-cloud-compute";
+        version = "1.4.0";
+
+        src = fetchPypi {
+          inherit pname version;
+          sha256 = "0sgp0xa9cfmgyb1dwdy1f4q9dfr3lgsgm7vbiks9xmiaf0fr221m";
+        };
+
+        propagatedBuildInputs = [
+          google-api-core
+          proto-plus
+          protobuf
+        ];
+
+        pythonImportsCheck = [
+          "google.cloud.compute_v1"
+        ];
+
+        doCheck = false;
+
+        meta = with lib; {
+          homepage = "https://github.com/googleapis/python-compute";
+        };
       };
     };
-
-    cattrs = buildPythonPackage rec {
-      pname = "cattrs";
-      version = "1.1.2";
-
-      src = fetchPypi {
-        inherit pname version;
-        sha256 = "08ikvw5ikgdwanmbf2msi8ppcp80pfs4f0kkay2khx2sfka3r1x5";
-      };
-
-      propagatedBuildInputs = [ attrs ];
-
-      doCheck = false;
-
-      meta = with lib; {
-        description = "Composable complex class support for attrs.";
-        homepage = "https://github.com/Tinche/cattrs";
-      };
-    };
-  };
 in
 pynixifyOverlay
