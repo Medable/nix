@@ -59,6 +59,8 @@ let
     ];
     nix = [
       statix
+      jacobi.hex
+      jacobi.hexrender
     ];
     scripts = [
       (writeShellScriptBin "test_actions" ''
