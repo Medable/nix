@@ -16,6 +16,7 @@ let
       slack-sdk = prev.slack-sdk.overridePythonAttrs (_: { doCheck = false; });
       pyopenssl = if isM1 then prev.pyopenssl.overrideAttrs (_: { meta.broken = false; }) else prev.pyopenssl;
       google-auth = prev.google-auth.overridePythonAttrs (_: { doCheck = false; });
+      pycurl = if isM1 then prev.pycurl.overrideAttrs (_: { doInstallCheck = false; }) else prev.pycurl;
 
       looker-sdk = buildPythonPackage rec {
         pname = "looker-sdk";
