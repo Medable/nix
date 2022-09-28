@@ -31,7 +31,7 @@ let
   name = "medable-nix";
   tools = with pkgs; {
     cli = [
-      bashInteractive_5
+      bashInteractive
       curl
       delta
       dyff
@@ -73,4 +73,7 @@ let
     inherit name tools;
   };
 in
-env // { inherit pkgs jacobi; }
+env // {
+  inherit pkgs jacobi;
+  inherit (jacobi) mdctl;
+}
