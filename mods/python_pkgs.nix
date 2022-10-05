@@ -109,32 +109,6 @@ let
           homepage = "https://github.com/Tinche/cattrs";
         };
       };
-
-      google-cloud-compute = buildPythonPackage rec {
-        pname = "google-cloud-compute";
-        version = "1.4.0";
-
-        src = fetchPypi {
-          inherit pname version;
-          sha256 = "0sgp0xa9cfmgyb1dwdy1f4q9dfr3lgsgm7vbiks9xmiaf0fr221m";
-        };
-
-        propagatedBuildInputs = [
-          google-api-core
-          proto-plus
-          protobuf
-        ];
-
-        pythonImportsCheck = [
-          "google.cloud.compute_v1"
-        ];
-
-        doCheck = false;
-
-        meta = with lib; {
-          homepage = "https://github.com/googleapis/python-compute";
-        };
-      };
     };
 in
 pynixifyOverlay
