@@ -53,6 +53,15 @@ rec {
     };
   };
 
+  # we need nodejs 14 back
+  nodejs-14_x = nodejs-14_19_1;
+  nodejs-14_19_1 = (import
+    (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/d1c3fea7ecbed758168787fe4e4a3157e52bc808.tar.gz";
+      sha256 = "0ykm15a690v8lcqf2j899za3j6hak1rm3xixdxsx33nz7n3swsyy";
+    })
+    { }).nodejs-14_x;
+
   custom = [
     prospector-177
     haproxy-2-2-23
@@ -60,5 +69,6 @@ rec {
     haproxy-2-2-25
     haproxy-2-6-5
     awscli2
+    nodejs-14_x
   ];
 }
