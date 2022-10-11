@@ -1,5 +1,4 @@
-with builtins;
-{ load_pin ? x: fromJSON (readFile x)
+{ load_pin ? x: builtins.fromJSON (builtins.readFile x)
 , nixpkgs_pin ? load_pin ./pins/nixpkgs.json
 , jpetrucciani_pin ? load_pin ./pins/jpetrucciani.json
 , pkgs ? import
