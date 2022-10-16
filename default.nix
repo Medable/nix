@@ -23,7 +23,7 @@
         url = "https://github.com/jpetrucciani/nix/archive/${jpetrucciani_pin.rev}.tar.gz";
       }
     )
-    { nixpkgs = pkgs.path; }
+    { }
 , overlays ? [ ]
 }:
 let
