@@ -1,7 +1,6 @@
 let
   pynixifyOverlay =
     final: prev: {
-      python39 = prev.python39.override { inherit packageOverrides; };
       python310 = prev.python310.override { inherit packageOverrides; };
       python311 = prev.python311.override { inherit packageOverrides; };
     };
@@ -29,7 +28,12 @@ let
         };
 
         buildInputs = [ exceptiongroup ];
-        propagatedBuildInputs = [ requests attrs cattrs typing-extensions ];
+        propagatedBuildInputs = [
+          requests
+          attrs
+          cattrs
+          typing-extensions
+        ];
 
         pythonImportsCheck = [
           "looker_sdk"
