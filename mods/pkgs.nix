@@ -54,11 +54,11 @@ rec {
   };
 
   # we need nodejs 14 back
-  nodejs-14_x = nodejs-14_19_1;
-  nodejs-14_19_1 = (import
+  nodejs-14_x = nodejs-14_20_0;
+  nodejs-14_20_0 = (import
     (builtins.fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/d1c3fea7ecbed758168787fe4e4a3157e52bc808.tar.gz";
-      sha256 = "0ykm15a690v8lcqf2j899za3j6hak1rm3xixdxsx33nz7n3swsyy";
+      url = "https://github.com/NixOS/nixpkgs/archive/ee01de29d2f58d56b1be4ae24c24bd91c5380cea.tar.gz";
+      sha256 = "0829fqp43cp2ck56jympn5kk8ssjsyy993nsp0fjrnhi265hqps7";
     })
     { }).nodejs-14_x;
 
