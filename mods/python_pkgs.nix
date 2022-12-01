@@ -1,7 +1,6 @@
 let
   pynixifyOverlay =
     final: prev: {
-      python39 = prev.python39.override { inherit packageOverrides; };
       python310 = prev.python310.override { inherit packageOverrides; };
       python311 = prev.python311.override { inherit packageOverrides; };
     };
@@ -20,16 +19,21 @@ let
 
       looker-sdk = buildPythonPackage rec {
         pname = "looker-sdk";
-        version = "22.10.0";
+        version = "22.20.0";
 
         src = fetchPypi {
           inherit version;
           pname = "looker_sdk";
-          sha256 = "sha256-Ex/AAdZp+qo91qZOLtRnzlYR4y0TILiycPgZxI5pVNE=";
+          sha256 = "05zzrl30yhizqn882wa7b3v3xqf1hqj9izdg0xa8y3bn5zgfl765";
         };
 
         buildInputs = [ exceptiongroup ];
-        propagatedBuildInputs = [ requests attrs cattrs typing-extensions ];
+        propagatedBuildInputs = [
+          attrs
+          cattrs
+          requests
+          typing-extensions
+        ];
 
         pythonImportsCheck = [
           "looker_sdk"
@@ -77,36 +81,6 @@ let
         meta = with lib; {
           description = "Google Drive API made easy. Maintained fork of PyDrive.";
           homepage = "https://github.com/iterative/PyDrive2";
-        };
-      };
-
-      cattrs = buildPythonPackage rec {
-        pname = "cattrs";
-        version = "22.1.0";
-
-        format = "pyproject";
-
-        src = fetchTarball {
-          url = "https://github.com/python-attrs/cattrs/archive/refs/tags/v${version}.tar.gz";
-          sha256 = "1n0h25gj6zd02kqyl040xpdvg4hpy1j92716sz0rg019xjqqijqb";
-        };
-
-        propagatedBuildInputs = [ attrs ];
-        buildInputs = [ poetry exceptiongroup ];
-
-        pythonImportsCheck = [
-          "cattr"
-        ];
-
-        preConfigure = ''
-          sed -i -E '/"<= 3.10"/d' ./pyproject.toml
-        '';
-
-        doCheck = false;
-
-        meta = with lib; {
-          description = "Composable complex class support for attrs.";
-          homepage = "https://github.com/Tinche/cattrs";
         };
       };
     };
