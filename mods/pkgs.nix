@@ -3,16 +3,6 @@ with prev;
 rec {
   inherit (stdenv) isLinux isDarwin isAarch64;
 
-  prospector-177 = (import
-    (fetchFromGitHub {
-      name = "frozen-prospector";
-      owner = "jpetrucciani";
-      repo = "nix";
-      rev = "58e698a20ba4cc8b58a9e08e359cc413e2868a6b";
-      sha256 = "02z5hmbh0zag6smzsyd1pxgzzw84vnrdiqww3jyk3iwk6abkzjh6";
-    })
-    { }).prospector-176;
-
   # haproxy overrides
   haproxy-pin = { version, sha256 }: haproxy.overrideAttrs (attrs: rec {
     inherit version;
@@ -33,24 +23,17 @@ rec {
     version = "2.2.25";
     sha256 = "sha256-vrQH6wiyxpfRFaGMANagI/eg+yy5m/+cNMnf2dLFLys=";
   };
-  haproxy-2-6-5 = haproxy-pin {
-    version = "2.6.5";
-    sha256 = "sha256-zp4Z6/zdQ+Ua+KYJDx341RLZct33QvpkimQ7uxkFZgU=";
+  haproxy-2-2-26 = haproxy-pin {
+    version = "2.2.26";
+    sha256 = "sha256-anKoZn8qWvsAyjT+vxOLpqG/BMNb2xtyXS55qS982Vk=";
   };
-
-  awscli2 = prev.awscli2.override {
-    python3 = prev.awscli2.python // {
-      override = args: prev.awscli2.python.override (args // {
-        packageOverrides = self: super: args.packageOverrides self super // (
-          if stdenv.isDarwin
-          then {
-            twisted = super.twisted.overrideAttrs (_: { doInstallCheck = false; });
-            pyopenssl = super.pyopenssl.overrideAttrs (_: { meta.broken = false; });
-          }
-          else { }
-        );
-      });
-    };
+  haproxy-2-6-7 = haproxy-pin {
+    version = "2.6.7";
+    sha256 = "sha256-z/m4sYpSv+wnf5wYh/rJPBjhufPv9IiSJVp8bmRSi30=";
+  };
+  haproxy-2-7-1 = haproxy-pin {
+    version = "2.7.1";
+    sha256 = "sha256-FV86L7bfwf39E9lGomCrjdKhN3FKy4GFEHSeP/trNR0=";
   };
 
   # we need nodejs 14 back
@@ -63,11 +46,12 @@ rec {
     { }).nodejs-14_x;
 
   custom = [
-    prospector-177
     haproxy-2-2-23
     haproxy-2-2-24
     haproxy-2-2-25
-    haproxy-2-6-5
+    haproxy-2-2-26
+    haproxy-2-6-7
+    haproxy-2-7-1
     awscli2
     nodejs-14_x
   ];

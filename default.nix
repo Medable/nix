@@ -2,13 +2,11 @@
 , nixpkgs_pin ? load_pin ./pins/nixpkgs.json
 , jpetrucciani_pin ? load_pin ./pins/jpetrucciani.json
 , pkgs ? import
-    (
-      fetchTarball {
-        inherit (nixpkgs_pin) sha256;
-        name = "nixpkgs-unstable-${nixpkgs_pin.date}";
-        url = "https://github.com/NixOS/nixpkgs/archive/${nixpkgs_pin.rev}.tar.gz";
-      }
-    )
+    (fetchTarball {
+      inherit (nixpkgs_pin) sha256;
+      name = "nixpkgs-unstable-${nixpkgs_pin.date}";
+      url = "https://github.com/NixOS/nixpkgs/archive/${nixpkgs_pin.rev}.tar.gz";
+    })
     {
       config = {
         allowUnfree = true;
@@ -16,13 +14,11 @@
       overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./overlays.nix) ++ overlays;
     }
 , jacobi ? import
-    (
-      fetchTarball {
-        inherit (jpetrucciani_pin) sha256;
-        name = "jpetrucciani-${jpetrucciani_pin.date}";
-        url = "https://github.com/jpetrucciani/nix/archive/${jpetrucciani_pin.rev}.tar.gz";
-      }
-    )
+    (fetchTarball {
+      inherit (jpetrucciani_pin) sha256;
+      name = "jpetrucciani-${jpetrucciani_pin.date}";
+      url = "https://github.com/jpetrucciani/nix/archive/${jpetrucciani_pin.rev}.tar.gz";
+    })
     { }
 , overlays ? [ ]
 }:
