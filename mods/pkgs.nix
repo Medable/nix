@@ -52,7 +52,6 @@ rec {
     haproxy-2-2-26
     haproxy-2-6-7
     haproxy-2-7-1
-    awscli2
     nodejs-14_x
   ];
 }

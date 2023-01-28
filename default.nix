@@ -64,9 +64,12 @@ let
     ];
   };
 
-  env = jacobi.enviro {
-    inherit name tools;
-  };
+  env = let paths = jacobi._toolset tools; in
+    jacobi.buildEnv {
+      inherit name;
+      buildInputs = paths;
+      paths = paths;
+    };
 in
 env // {
   inherit pkgs jacobi;
