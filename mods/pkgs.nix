@@ -27,13 +27,17 @@ rec {
     version = "2.2.26";
     sha256 = "sha256-anKoZn8qWvsAyjT+vxOLpqG/BMNb2xtyXS55qS982Vk=";
   };
-  haproxy-2-6-7 = haproxy-pin {
-    version = "2.6.7";
-    sha256 = "sha256-z/m4sYpSv+wnf5wYh/rJPBjhufPv9IiSJVp8bmRSi30=";
+  haproxy-2-2-27 = haproxy-pin {
+    version = "2.2.27";
+    sha256 = "sha256-eVg84n7Y898KQVp2Gmt7AU4+pYLmxKMkqC6cJ+RiF9Y=";
   };
-  haproxy-2-7-1 = haproxy-pin {
-    version = "2.7.1";
-    sha256 = "sha256-FV86L7bfwf39E9lGomCrjdKhN3FKy4GFEHSeP/trNR0=";
+  haproxy-2-2-28 = haproxy-pin {
+    version = "2.2.28";
+    sha256 = "sha256-VzR2bGHtF3xdtvHl9A3UPMU5wiRSxp1zqKdO9chggjU=";
+  };
+  haproxy-2-7-2 = haproxy-pin {
+    version = "2.7.2";
+    sha256 = "sha256-Y7xuwDAtDrvh+nacGWBmQN6DSsjLB0R7gHmctWPcDz8=";
   };
 
   # we need nodejs 14 back
@@ -50,8 +54,9 @@ rec {
     haproxy-2-2-24
     haproxy-2-2-25
     haproxy-2-2-26
-    haproxy-2-6-7
-    haproxy-2-7-1
+    haproxy-2-2-27
+    haproxy-2-2-28
+    haproxy-2-7-2
     nodejs-14_x
   ];
 }
