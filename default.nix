@@ -23,7 +23,9 @@
 , overlays ? [ ]
 }:
 let
+  inherit (pkgs.lib) flatten;
   name = "medable-nix";
+
   tools = with pkgs; {
     cli = [
       bashInteractive
@@ -64,12 +66,11 @@ let
     ];
   };
 
-  env = let paths = jacobi._toolset tools; in
-    jacobi.buildEnv {
-      inherit name;
-      buildInputs = paths;
-      paths = paths;
-    };
+  paths = flatten [ (flatten (builtins.attrValues tools)) ];
+  env = jacobi.buildEnv {
+    inherit name paths;
+    buildInputs = paths;
+  };
 in
 env // {
   inherit pkgs jacobi;

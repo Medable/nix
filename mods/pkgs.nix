@@ -35,6 +35,10 @@ rec {
     version = "2.2.28";
     sha256 = "sha256-VzR2bGHtF3xdtvHl9A3UPMU5wiRSxp1zqKdO9chggjU=";
   };
+  haproxy-2-2-29 = haproxy-pin {
+    version = "2.2.29";
+    sha256 = "sha256-HkH0lnT79WY7VcX3kZp9BeSAcwZT8rzew4S4g278H7A=";
+  };
   haproxy-2-7-2 = haproxy-pin {
     version = "2.7.2";
     sha256 = "sha256-Y7xuwDAtDrvh+nacGWBmQN6DSsjLB0R7gHmctWPcDz8=";
@@ -56,6 +60,7 @@ rec {
     haproxy-2-2-26
     haproxy-2-2-27
     haproxy-2-2-28
+    haproxy-2-2-29
     haproxy-2-7-2
     nodejs-14_x
   ];
