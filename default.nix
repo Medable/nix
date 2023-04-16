@@ -11,7 +11,7 @@
       config = {
         allowUnfree = true;
       };
-      overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./overlays.nix) ++ overlays;
+      overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./mods/default.nix) ++ overlays;
     }
 , jacobi ? import
     (fetchTarball {
@@ -23,7 +23,7 @@
 , overlays ? [ ]
 }:
 let
-  name = "medable-nix";
+  name = "medable";
 
   tools = with pkgs; {
     cli = [
@@ -50,7 +50,7 @@ let
       nix_hash_medable
       nix_hash_unstable
     ];
-    medable = with jacobi; [
+    medable = [
       mdctl
     ];
     nix = [
@@ -66,12 +66,14 @@ let
   };
 
   paths = pkgs.lib.flatten [ (builtins.attrValues tools) ];
-  env = jacobi.buildEnv {
+  env = pkgs.buildEnv {
     inherit name paths;
     buildInputs = paths;
   };
 in
-env // {
+env // pkgs.custom // {
   inherit pkgs jacobi;
-  inherit (jacobi) mdctl;
+  inherit (jacobi) portwatch __rd __rdshell __pg_bootstrap __pg_shell __pg __run;
+  inherit (jacobi) pog hex hexrender nix_hash_medable;
+  inherit (jacobi) _zaddy zaddy zaddy-browser;
 }

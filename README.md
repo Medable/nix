@@ -6,6 +6,22 @@ This repo represents channel pins and overlays that we use at Medable!
 
 ---
 
+# mdctl!
+
+If you're looking for an easy way to use mdctl without the node/nvm environment hassle, try out nix!
+
+```bash
+# install mdctl to your nix-env (kinda like brew install!)
+nix-env -f https://github.com/medable/nix/archive/main.tar.gz -iA mdctl
+
+# temporary shell with mdctl!
+nix-shell -A mdctl https://github.com/medable/nix/archive/main.tar.gz
+```
+
+There is also an attribute `mdctl-alpha`, which is independently updated as well!
+
+---
+
 ## In this repo
 
 ### [.github/](./.github/)
@@ -23,7 +39,3 @@ This directory contains rev/sha256 combos for any of the other repos that we tra
 ### [default.nix](./default.nix)
 
 This file acts as the entrypoint for nix to pin our nixpkgs version to the rev and sha256 found [in the sources directory](./sources/nixpkgs.json).
-
-### [overlays.nix](./overlays.nix)
-
-This file declares the overlays that we apply to our pinned version of nixpkgs. This should load all of the files in the [mods](./mods/) directory, which are overlay functions which apply to our nixpkgs object in nix.
