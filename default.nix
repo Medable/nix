@@ -73,7 +73,7 @@ let
 in
 pkgs // pkgs.custom // {
   inherit jacobi;
-  inherit (jacobi) portwatch __rd __rdshell __pg_bootstrap __pg_shell __pg __run;
+  inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
   inherit (jacobi) pog hex hexrender nix_hash_medable;
   inherit (jacobi) _zaddy zaddy zaddy-browser;
 }
