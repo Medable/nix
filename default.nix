@@ -18,62 +18,22 @@
       name = "jpetrucciani-${jpetrucciani_pin.date}";
       url = "https://github.com/jpetrucciani/nix/archive/${jpetrucciani_pin.rev}.tar.gz";
     })
-    { inherit overlays config system; }
+    { inherit config system; }
 , overlays ? [ ]
+, python_overlays ? [ ]
 , config ? { }
 , system ? builtins.currentSystem
 }:
 let
-  name = "medable";
-
-  tools = with pkgs; {
-    cli = [
-      bashInteractive
-      curl
-      delta
-      dyff
-      git
-      gron
-      jq
-      just
-      (with jacobi; [
-        batwhich
-        hax.comma
-        get_cert
-      ])
-    ];
-    formatting = [
-      nixpkgs-fmt
-      nodePackages.prettier
-    ];
-    hashers = with jacobi; [
-      nix_hash_jpetrucciani
-      nix_hash_medable
-      nix_hash_unstable
-    ];
-    medable = [
-      mdctl
-    ];
-    nix = [
-      statix
-      jacobi.hex
-      jacobi.hexrender
-    ];
-    scripts = [
-      (writeShellScriptBin "test_actions" ''
-        ${pkgs.act}/bin/act --container-architecture linux/amd64 --artifact-server-path ./.cache/ -r --rm
-      '')
-    ];
-  };
-
-  paths = pkgs.lib.flatten [ (builtins.attrValues tools) ];
-  env = pkgs.buildEnv {
-    inherit name paths;
-    buildInputs = paths;
-  };
+  packageOverrides = pkgs.lib.composeManyExtensions (jacobi.python311.overlays ++ [
+    (import ./mods/python/china.nix)
+  ] ++ python_overlays);
+  python311 = pkgs.python311.override { self = python311; inherit packageOverrides; };
+  python312 = pkgs.python312.override { self = python312; inherit packageOverrides; };
+  python = python311;
 in
 pkgs // pkgs.custom // {
-  inherit jacobi;
+  inherit jacobi python python311 python312;
   inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin;
   inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
   inherit (jacobi) pog hex hexrender nixup nix_hash_medable nix_hash_jpetrucciani;
