@@ -37,7 +37,7 @@ pkgs // pkgs.custom // {
   inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin;
   inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
   inherit (jacobi) pog hex hexrender nixup nix_hash_medable nix_hash_jpetrucciani;
-  inherit (jacobi) _zaddy zaddy zaddy-browser;
+  inherit (jacobi) srv _zaddy zaddy zaddy-browser;
   ktools = jacobi.k8s_pog_scripts;
   dtools = jacobi.docker_pog_scripts;
 }
