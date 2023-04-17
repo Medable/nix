@@ -38,4 +38,4 @@ This directory contains rev/sha256 combos for any of the other repos that we tra
 
 ### [default.nix](./default.nix)
 
-This file acts as the entrypoint for nix to pin our nixpkgs version to the rev and sha256 found [in the sources directory](./sources/nixpkgs.json).
+This file acts as the entrypoint for nix to pin our nixpkgs version to the rev and sha256 found [in the pins directory](./pins).
