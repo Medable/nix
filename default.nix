@@ -8,9 +8,8 @@
       url = "https://github.com/NixOS/nixpkgs/archive/${nixpkgs_pin.rev}.tar.gz";
     })
     {
-      config = {
-        allowUnfree = true;
-      };
+      inherit system;
+      config = { allowUnfree = true; } // config;
       overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./mods/default.nix) ++ overlays;
     }
 , jacobi ? import
@@ -21,6 +20,8 @@
     })
     { }
 , overlays ? [ ]
+, config ? { }
+, system ? builtins.currentSystem
 }:
 let
   name = "medable";
