@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { }, nodejs ? pkgs.nodejs-14_x }:
+{ pkgs ? import <nixpkgs> { }, nodejs ? pkgs.nodejs_16 }:
 with pkgs; with lib; with builtins;
 let
   yarn2nix = yarn2nix-moretea.override { inherit nodejs; };

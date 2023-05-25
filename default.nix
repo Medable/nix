@@ -9,7 +9,12 @@
     })
     {
       inherit system;
-      config = { allowUnfree = true; } // config;
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "nodejs-16.20.0"
+        ];
+      } // config;
       overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./mods/default.nix) ++ overlays;
     }
 , jacobi ? import

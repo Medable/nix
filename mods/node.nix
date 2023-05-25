@@ -16,5 +16,4 @@ rec {
     inherit nodejs-14_x;
     nodejs_14 = nodejs-14_20_0;
   };
-  nodejs_16 = prev.nodejs_16.overrideAttrs (_: { meta.knownVulnerabilities = [ ]; });
 }
