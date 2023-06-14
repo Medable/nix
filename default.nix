@@ -36,13 +36,16 @@ let
   python311 = pkgs.python311.override { self = python311; inherit packageOverrides; };
   python312 = pkgs.python312.override { self = python312; inherit packageOverrides; };
   python = python311;
+
+  jacobi_tools = {
+    inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin;
+    inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
+    inherit (jacobi) pog hex hexrender nixrender nixup nix_hash_medable nix_hash_jpetrucciani;
+    inherit (jacobi) srv _zaddy zaddy zaddy-browser;
+  };
 in
-pkgs // pkgs.custom // {
-  inherit jacobi python python311 python312;
-  inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin;
-  inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
-  inherit (jacobi) pog hex hexrender nixrender nixup nix_hash_medable nix_hash_jpetrucciani;
-  inherit (jacobi) srv _zaddy zaddy zaddy-browser;
+pkgs // pkgs.custom // jacobi_tools // {
+  inherit jacobi jacobi_tools python python311 python312;
   ktools = jacobi.k8s_pog_scripts;
   dtools = jacobi.docker_pog_scripts;
 }

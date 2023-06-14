@@ -7,11 +7,11 @@ jobs:
       matrix:
         os:
           - ubuntu-22.04
-          - macos-12
+          - macos-13
     name: nix (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
       - uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: |
@@ -20,4 +20,4 @@ jobs:
         with:
           name: medable
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix --show-trace build -f . custom
+      - run: nix --show-trace build -f . custom jacobi_tools
