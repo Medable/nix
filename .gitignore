@@ -6,3 +6,4 @@ result*
 *.pem
 *.secret
 .idea
+node_modules

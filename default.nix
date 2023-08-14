@@ -12,7 +12,7 @@
       config = {
         allowUnfree = true;
         permittedInsecurePackages = [
-          "nodejs-16.20.1"
+          "nodejs-16.20.2"
         ];
       } // config;
       overlays = [ (_: _: { inherit jacobi; }) ] ++ (import ./mods/default.nix) ++ overlays;
