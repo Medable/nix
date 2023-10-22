@@ -4,8 +4,8 @@ jobs:
   prettier:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
+      - uses: actions/checkout@v4.1.1
+      - uses: cachix/install-nix-action@v23
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
@@ -14,8 +14,8 @@ jobs:
   nixpkgs-fmt:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
+      - uses: actions/checkout@v4.1.1
+      - uses: cachix/install-nix-action@v23
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
