@@ -3,7 +3,7 @@ let
   inherit (builtins) listToAttrs pathExists readDir;
   inherit (prev.lib) hasSuffix mapAttrsToList optionalAttrs removeSuffix;
   inherit (prev.lib.attrsets) filterAttrs;
-  inherit (prev.pkgs) callPackage nodejs_16;
+  inherit (prev.pkgs) callPackage nodejs_20;
   custom =
     (
       fn:
@@ -15,7 +15,7 @@ let
         value = callPackage (./pkgs + ("/" + n))
           {
             inherit (prev) pkgs;
-            nodejs = nodejs_16;
+            nodejs = nodejs_20;
           };
       }
     );
