@@ -43,7 +43,7 @@ let
     inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
     inherit (jacobi) pog hex hexcast nixup nix_hash_medable nix_hash_jpetrucciani;
     inherit (jacobi) srv _zaddy zaddy zaddy-browser;
-    inherit (jacobi) poetry2nix nix2container;
+    inherit (jacobi) poetry2nix nix2container foundry;
   };
 in
 pkgs // pkgs.custom // jacobi_tools // {
