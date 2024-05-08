@@ -15,7 +15,7 @@ If you're looking for an easy way to use mdctl without the node/nvm environment 
 nix-env -f https://github.com/medable/nix/archive/main.tar.gz -iA mdctl
 
 # temporary shell with mdctl!
-nix-shell -A mdctl https://github.com/medable/nix/archive/main.tar.gz
+nix shell -f https://github.com/medable/nix/archive/main.tar.gz mdctl
 ```
 
 There is also an attribute `mdctl-alpha`, which is independently updated as well!
