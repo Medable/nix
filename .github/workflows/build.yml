@@ -6,7 +6,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-22.04
+          - ubuntu-24.04
           - macos-14
     name: nix (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
@@ -16,8 +16,4 @@ jobs:
         with:
           extra_nix_config: |
             experimental-features = nix-command flakes
-      - uses: cachix/cachix-action@master
-        with:
-          name: medable
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix --show-trace build -f . custom jacobi_tools
