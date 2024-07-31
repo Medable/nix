@@ -2,6 +2,6 @@
   "name": "pkg",
   "version": "0.0.0",
   "dependencies": {
-    "@medable/mdctl-cli": "1.0.71-alpha.5"
+    "@medable/mdctl-cli": "1.0.73-alpha.1"
   }
 }
