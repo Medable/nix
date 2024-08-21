@@ -15,6 +15,7 @@ rec {
         url = "https://www.haproxy.org/download/${prev.lib.versions.majorMinor version}/src/${old.pname}-${version}.tar.gz";
       };
       buildInputs = old.buildInputs ++ (if pre3 then oldDeps else [ ]);
+      buildFlags = old.buildFlags ++ (if pre3 then [ "EXTRA_OBJS=contrib/prometheus-exporter/service-prometheus.o" ] else [ ]);
     });
   haproxy-2-2-23 = haproxy-pin {
     version = "2.2.23";
