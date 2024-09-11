@@ -12,8 +12,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4.1.7
-      - uses: cachix/install-nix-action@V27
-        with:
-          extra_nix_config: |
-            experimental-features = nix-command flakes
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - run: nix --show-trace build -f . custom jacobi_tools
