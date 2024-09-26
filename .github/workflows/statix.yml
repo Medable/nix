@@ -4,7 +4,7 @@ jobs:
   statix:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v4.2.0
       - uses: cachix/install-nix-action@V27
         with:
           extra_nix_config: |
