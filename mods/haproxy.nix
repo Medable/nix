@@ -45,12 +45,9 @@ rec {
     version = "2.2.29";
     sha256 = "sha256-HkH0lnT79WY7VcX3kZp9BeSAcwZT8rzew4S4g278H7A=";
   };
-  haproxy-2-7-2 = haproxy-pin {
-    version = "2.7.2";
-    sha256 = "sha256-Y7xuwDAtDrvh+nacGWBmQN6DSsjLB0R7gHmctWPcDz8=";
-  };
+
 
   custom = prev.custom // {
-    inherit haproxy-2-2-23 haproxy-2-2-24 haproxy-2-2-25 haproxy-2-2-26 haproxy-2-2-27 haproxy-2-2-28 haproxy-2-2-29 haproxy-2-7-2;
+    inherit haproxy-2-2-23 haproxy-2-2-24 haproxy-2-2-25 haproxy-2-2-26 haproxy-2-2-27 haproxy-2-2-28 haproxy-2-2-29;
   };
 }
