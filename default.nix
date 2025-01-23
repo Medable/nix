@@ -30,20 +30,20 @@
 , system ? builtins.currentSystem
 }:
 let
-  packageOverrides = pkgs.lib.composeManyExtensions (jacobi.python311.overlays ++ [
+  packageOverrides = pkgs.lib.composeManyExtensions (jacobi.python312.overlays ++ [
     (import ./mods/python/china.nix)
   ] ++ python_overlays);
   python311 = pkgs.python311.override { self = python311; inherit packageOverrides; };
   python312 = pkgs.python312.override { self = python312; inherit packageOverrides; };
   python313 = pkgs.python313.override { self = python313; inherit packageOverrides; };
-  python = python311;
+  python = python312;
 
   jacobi_tools = {
     inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin;
     inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
     inherit (jacobi) pog hex hexcast nixup nixcache nixsum nix_hash_medable nix_hash_jpetrucciani;
     inherit (jacobi) srv _zaddy zaddy;
-    inherit (jacobi) poetry2nix nix2container foundry terraform_1-5-5;
+    inherit (jacobi) poetry2nix nix2container foundry terraform_1-5-5 jfmt;
   };
 in
 pkgs // pkgs.custom // jacobi_tools // {
