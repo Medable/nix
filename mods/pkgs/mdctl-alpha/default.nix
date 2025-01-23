@@ -1,8 +1,8 @@
-{ pkgs ? import <nixpkgs> { }, nodejs ? pkgs.nodejs_20 }:
+{ pkgs ? import <nixpkgs> { }, nodejs ? pkgs.nodejs_22 }:
 with pkgs; with lib; with builtins;
 let
   yarn2nix = yarn2nix-moretea.override { inherit nodejs; };
-  osSpecific = with pkgs.darwin.apple_sdk.frameworks; if pkgs.stdenv.isDarwin then [ Security AppKit xcbuild ] else [ ];
+  osSpecific = with pkgs.darwin.apple_sdk.frameworks; if pkgs.stdenv.isDarwin then [ Security AppKit xcbuild darwin.cctools ] else [ ];
   json = fromJSON (readFile ./package.json);
   pname = replaceStrings [ "@" "/" ] [ "" "-" ] (head (attrNames json.dependencies));
   version = head (attrValues json.dependencies);
