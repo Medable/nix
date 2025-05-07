@@ -1,5 +1,5 @@
 name: build
-on: {workflow_dispatch, push: {branches: [main]}, pull_request}
+on: { workflow_dispatch, push: { branches: [main] }, pull_request }
 jobs:
   build:
     strategy:
@@ -12,5 +12,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
       - run: nix --show-trace build -f . custom jacobi_tools
