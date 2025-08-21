@@ -2,8 +2,8 @@ final: prev:
 with prev;
 rec {
   coscli = prev.callPackage
-    ({ stdenv, lib, buildGo124Module, fetchFromGitHub }:
-      buildGo124Module rec {
+    ({ stdenv, lib, buildGoModule, fetchFromGitHub }:
+      buildGoModule rec {
         pname = "coscli";
         version = "0.13.0";
 
@@ -34,8 +34,8 @@ rec {
     { };
 
   gcsproxy = prev.callPackage
-    ({ stdenv, lib, buildGo124Module, fetchFromGitHub }:
-      buildGo124Module rec {
+    ({ stdenv, lib, buildGoModule, fetchFromGitHub }:
+      buildGoModule rec {
         pname = "gcsproxy";
         version = "0.3.2";
 
