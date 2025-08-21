@@ -2,7 +2,7 @@
 with pkgs; with lib; with builtins;
 let
   yarn2nix = yarn2nix-moretea.override { inherit nodejs; };
-  osSpecific = with pkgs.darwin.apple_sdk.frameworks; if pkgs.stdenv.isDarwin then [ Security AppKit xcbuild darwin.cctools ] else [ ];
+  osSpecific = if pkgs.stdenv.isDarwin then [ xcbuild darwin.cctools ] else [ ];
   json = fromJSON (readFile ./package.json);
   pname = replaceStrings [ "@" "/" ] [ "" "-" ] (head (attrNames json.dependencies));
   version = head (attrValues json.dependencies);
