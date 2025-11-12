@@ -8,7 +8,7 @@ let
     (
       fn:
       optionalAttrs (pathExists ./pkgs)
-        (listToAttrs (mapAttrsToList fn (filterAttrs (k: v: (v == "directory") || (hasSuffix ".nix" k)) (readDir ./pkgs))))
+        (listToAttrs (mapAttrsToList fn (filterAttrs (k: v: (v == "directory") || ((hasSuffix ".nix" k) && k != "default.nix")) (readDir ./pkgs))))
     ) (
       n: _: {
         name = removeSuffix ".nix" n;
