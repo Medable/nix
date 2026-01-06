@@ -7,3 +7,4 @@ result*
 *.secret
 .idea
 node_modules
+nixcache.log
