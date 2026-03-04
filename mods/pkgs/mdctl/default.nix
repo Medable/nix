@@ -36,7 +36,7 @@ let
     };
     postBuild = ''
       cd $out
-      export npm_config_nodedir="${nodejs.dev}"
+      export npm_config_nodedir="${nodejs}"
       npm rebuild keytar sqlite3
     '';
   }).overrideAttrs (old: {
