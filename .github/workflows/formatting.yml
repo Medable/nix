@@ -1,5 +1,5 @@
 name: formatting
-on: { workflow_dispatch, push: { branches: [main] }, pull_request }
+on: {workflow_dispatch, push: {branches: [main]}, pull_request}
 jobs:
   prettier:
     runs-on: ubuntu-24.04
