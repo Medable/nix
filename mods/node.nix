@@ -26,17 +26,19 @@ rec {
     }).nodejs_16;
 
   nodejs-18_x = nodejs-18_20_6;
-  nodejs-18_20_6 = (import
+  nodejs-18_20_6-pkgs = import
     (builtins.fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/4457f3606c598ae825fb4b185b65a464d9d07a16.tar.gz";
       sha256 = "0padq6kva9s2d0xsn7alsivswl4g37a781yyv59vlwf4iv2i1n4l";
     })
-    { }).nodejs_18;
+    { };
+  nodejs-18_20_6 = nodejs-18_20_6-pkgs.nodejs_18;
 
-  custom = prev.custom // {
-    inherit nodejs-14_x nodejs-16_x nodejs-18_x;
+  custom = (prev.custom or { }) // {
+    inherit nodejs-14_x nodejs-16_x nodejs-18_x nodejs-18_20_6-pkgs;
     nodejs_14 = nodejs-14_20_0;
     nodejs_16 = nodejs-16_20_0;
     nodejs_18 = nodejs-18_20_6;
+    nodejs_18_pkgs = nodejs-18_20_6-pkgs;
   };
 }

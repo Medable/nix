@@ -2,8 +2,8 @@
 pkgs.mkShell {
   name = "mdctl-alpha-dev-shell";
   nativeBuildInputs = with pkgs; [
-    nodejs_20
-    nodejs_20.pkgs.yarn
+    nodejs_18
+    nodejs_18.pkgs.yarn
     python3
     pkg-config
   ] ++ lib.optionals pkgs.stdenv.isLinux [
@@ -14,7 +14,7 @@ pkgs.mkShell {
     darwin.cctools
   ];
   env = {
-    npm_config_nodedir = "${pkgs.nodejs_20.dev}";
+    npm_config_nodedir = "${pkgs.nodejs_18}";
     NODE_EXTRA_CA_CERTS = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
   };
 }

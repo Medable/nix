@@ -1,9 +1,10 @@
 final: prev:
 let
   inherit (builtins) listToAttrs pathExists readDir;
-  inherit (prev.lib) hasSuffix mapAttrsToList optionalAttrs removeSuffix;
+  inherit (prev.lib) hasPrefix hasSuffix mapAttrsToList optionalAttrs removeSuffix;
   inherit (prev.lib.attrsets) filterAttrs;
-  inherit (prev.pkgs) callPackage nodejs_20;
+  nodePkgs = prev.custom.nodejs_18_pkgs;
+  packagePkgs = n: if hasPrefix "mdctl" (removeSuffix ".nix" n) then nodePkgs else prev.pkgs;
   custom =
     (
       fn:
@@ -12,11 +13,16 @@ let
     ) (
       n: _: {
         name = removeSuffix ".nix" n;
-        value = callPackage (./pkgs + ("/" + n))
-          {
-            inherit (prev) pkgs;
-            nodejs = nodejs_20;
-          };
+        value =
+          let
+            pkgs = packagePkgs n;
+          in
+          pkgs.callPackage (./pkgs + ("/" + n))
+            ({
+              inherit pkgs;
+            } // optionalAttrs (hasPrefix "mdctl" (removeSuffix ".nix" n)) {
+              nodejs = pkgs.nodejs_18;
+            });
       }
     );
 in
