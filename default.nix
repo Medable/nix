@@ -40,8 +40,8 @@ let
   python = python313;
 
   jacobi_tools = {
-    inherit (jacobi) batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin gcp_edit_json_secret;
-    inherit (jacobi) portwatch __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
+    inherit (jacobi) aq awl batwhich get_cert github_tags gke_config gke-gcloud-auth-plugin gcp_edit_json_secret;
+    inherit (jacobi) portwatch prism __rd __rd_shell __pg_bootstrap __pg_shell __pg __run;
     inherit (jacobi) pog hex hexcast nixup nixcache nixsum nix_hash_medable nix_hash_jpetrucciani;
     inherit (jacobi) srv _zaddy zaddy;
     inherit (jacobi) poetry2nix nix2container foundry terraform_1-5-5 jfmt uv-nix hax;
