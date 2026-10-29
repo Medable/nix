@@ -1,5 +1,6 @@
 {
-  "date": "2026-07-28",
-  "rev": "19c9d5f461ff701d060cb92086d19d89bc6510d4",
-  "sha256": "0rw83ibz7zs1h17r67sicbkc03ag40w33xfdyiqc6rd9ff8spmlv"
+  "date": "2026-10-29",
+  "rev": "477183b721db033e83fbc476687011bb287c8da9",
+  "sha256": "1i6465y5351xa0xp8s5gvaq8q0cdzh5pay76jfn5b0sscqnnl7vj",
+  "url": "https://github.com/jpetrucciani/nix/archive/477183b721db033e83fbc476687011bb287c8da9.tar.gz"
 }
